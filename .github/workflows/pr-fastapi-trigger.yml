@@ -27,7 +27,7 @@ jobs:
 
       - name: Send data to FastAPI
         run: |
-          curl -X POST http://localhost:8000/analyze \
+          curl -X POST  https://democrat-discrimination-contributions-investigators.trycloudflare.com/analyze \
             -H "Content-Type: application/json" \
             -d '{
               "repo_name": "'"$REPO_NAME"'",
