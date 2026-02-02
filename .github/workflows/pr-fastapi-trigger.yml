@@ -1,0 +1,38 @@
+name: PR → FastAPI Data Sender
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - main   # base branch
+
+jobs:
+  send-data:
+    runs-on: ubuntu-latest
+    # ⚠️ Use self-hosted if FastAPI runs on localhost
+    # runs-on: self-hosted
+
+    permissions:
+      contents: read
+      pull-requests: read
+
+    steps:
+      - name: Prepare PR context data
+        run: |
+          echo "REPO_NAME=${GITHUB_REPOSITORY}" >> $GITHUB_ENV
+          echo "BASE_BRANCH=${{ github.base_ref }}" >> $GITHUB_ENV
+          echo "PR_BRANCH=${{ github.head_ref }}" >> $GITHUB_ENV
+          echo "PR_BRANCH_URL=https://github.com/${GITHUB_REPOSITORY}/tree/${{ github.head_ref }}" >> $GITHUB_ENV
+          echo "PR_AUTHOR=${{ github.event.pull_request.user.login }}" >> $GITHUB_ENV
+
+      - name: Send data to FastAPI
+        run: |
+          curl -X POST http://localhost:8000/analyze \
+            -H "Content-Type: application/json" \
+            -d '{
+              "repo_name": "'"$REPO_NAME"'",
+              "base_branch": "'"$BASE_BRANCH"'",
+              "pr_branch": "'"$PR_BRANCH"'",
+              "pr_branch_url": "'"$PR_BRANCH_URL"'",
+              "username": "'"$PR_AUTHOR"'"
+            }'
