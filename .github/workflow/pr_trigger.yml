@@ -1,0 +1,25 @@
+name: Code Analysis PR Check
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - main
+
+jobs:
+  trigger-analysis:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger PR Check API
+        run: |
+          curl -X POST "${{ secrets.API_BASE_URL }}/api/pr-check" \
+          -H "Content-Type: application/json" \
+          -d '{
+            "repo_name": "${{ github.repository }}",
+            "repo_url": "https://github.com/${{ github.repository }}.git",
+            "pr_number": ${{ github.event.pull_request.number }},
+            "base_branch": "${{ github.event.pull_request.base.ref }}",
+            "pr_branch": "${{ github.event.pull_request.head.ref }}",
+            "username": "${{ github.actor }}",
+            "email_list": ["${{ github.actor }}@users.noreply.github.com", "admin@example.com"] 
+          }'
