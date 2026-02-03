@@ -12,14 +12,19 @@ jobs:
     steps:
       - name: Trigger PR Check API
         run: |
-          curl -X POST "${{ secrets.API_BASE_URL }}/api/pr-check" \
+          curl -f -X POST "${{ secrets.API_BASE_URL }}/api/pr-check" \
           -H "Content-Type: application/json" \
-          -d '{
-            "repo_name": "${{ github.repository }}",
-            "repo_url": "https://github.com/${{ github.repository }}.git",
-            "pr_number": ${{ github.event.pull_request.number }},
-            "base_branch": "${{ github.event.pull_request.base.ref }}",
-            "pr_branch": "${{ github.event.pull_request.head.ref }}",
-            "username": "${{ github.actor }}",
-            "email_list": ["${{ github.actor }}@users.noreply.github.com", "admin@example.com"] 
-          }'
+          --retry 3 \
+          --retry-delay 5 \
+          -d "{
+            \"repo_name\": \"${{ github.repository }}\",
+            \"repo_url\": \"https://github.com/${{ github.repository }}.git\",
+            \"pr_number\": ${{ github.event.pull_request.number }},
+            \"base_branch\": \"${{ github.event.pull_request.base.ref }}\",
+            \"pr_branch\": \"${{ github.event.pull_request.head.ref }}\",
+            \"username\": \"${{ github.actor }}\",
+            \"email_list\": [
+              \"${{ github.actor }}@users.noreply.github.com\",
+              \"admin@example.com\"
+            ]
+          }"
