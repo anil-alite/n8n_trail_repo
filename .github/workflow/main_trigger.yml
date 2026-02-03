@@ -13,9 +13,9 @@ jobs:
         run: |
           curl -X POST "${{ secrets.API_BASE_URL }}/api/main-update" \
           -H "Content-Type: application/json" \
-          -d '{
-            "repo_name": "${{ github.repository }}",
-            "repo_url": "https://github.com/${{ github.repository }}.git",
-            "branch": "main",
-            "email_list": ["admin@example.com"]
-          }'
+          -d "{
+            \"repo_name\": \"${{ github.repository }}\",
+            \"repo_url\": \"https://github.com/${{ github.repository }}.git\",
+            \"branch\": \"main\",
+            \"email_list\": [\"admin@example.com\"]
+          }"
