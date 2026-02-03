@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Trigger PR Check API
         run: |
-          curl -f -X POST "https://participated-tactics-pace-enlarge.trycloudflare.com /api/pr-check" \
+          curl -f -X POST "https://participated-tactics-pace-enlarge.trycloudflare.com/api/pr-check" \
           -H "Content-Type: application/json" \
           --retry 3 \
           --retry-delay 5 \
