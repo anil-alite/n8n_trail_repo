@@ -1,0 +1,21 @@
+name: Code Analysis Main Update
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  trigger-update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Main Update API
+        run: |
+          curl -X POST "${{ secrets.API_BASE_URL }}/api/main-update" \
+          -H "Content-Type: application/json" \
+          -d '{
+            "repo_name": "${{ github.repository }}",
+            "repo_url": "https://github.com/${{ github.repository }}.git",
+            "branch": "main",
+            "email_list": ["admin@example.com"]
+          }'
