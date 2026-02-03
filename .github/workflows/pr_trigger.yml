@@ -25,6 +25,6 @@ jobs:
             \"username\": \"${{ github.actor }}\",
             \"email_list\": [
               \"${{ github.actor }}@users.noreply.github.com\",
-              \"admin@example.com\"
+              \"anil999itmbu@gmail.com\"
             ]
           }"
