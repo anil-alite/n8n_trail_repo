@@ -1,4 +1,4 @@
-name: Code Analysis Main Update
+name: Code Analysis Main Branch Update
 
 on:
   push:
@@ -11,8 +11,10 @@ jobs:
     steps:
       - name: Trigger Main Update API
         run: |
-          curl -X POST "${{ secrets.API_BASE_URL }}/api/main-update" \
+          curl -f -X POST "https://monitored-prepare-solutions-tea.trycloudflare.com/api/main-update" \
           -H "Content-Type: application/json" \
+          --retry 3 \
+          --retry-delay 5 \
           -d "{
             \"repo_name\": \"${{ github.repository }}\",
             \"repo_url\": \"https://github.com/${{ github.repository }}.git\",
