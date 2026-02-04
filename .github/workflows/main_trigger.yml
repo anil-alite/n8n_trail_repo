@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Trigger Main Update API
         run: |
-          curl -f -X POST "https://grass-life-kurt-bangkok.trycloudflare.com/api/main-update" \
+          curl -f -X POST "https://examining-device-requiring-allied.trycloudflare.com/api/main-update" \
           -H "Content-Type: application/json" \
           --retry 3 \
           --retry-delay 5 \
