@@ -10,8 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Trigger Main Update API
+        env:
+          API_BASE_URL: ${{ secrets.API_BASE_URL }}
         run: |
-          curl -f -X POST "https://examining-device-requiring-allied.trycloudflare.com/api/main-update" \
+          curl -f -X POST "$API_BASE_URL/api/main-update" \
           -H "Content-Type: application/json" \
           --retry 3 \
           --retry-delay 5 \
