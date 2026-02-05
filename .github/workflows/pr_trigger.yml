@@ -11,8 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Trigger PR Check API
+        env:
+          API_BASE_URL: ${{ secrets.API_BASE_URL }}
         run: |
-          curl -f -X POST "https://examining-device-requiring-allied.trycloudflare.com/api/pr-check" \
+          curl -f -X POST "$API_BASE_URL/api/pr-check" \
           -H "Content-Type: application/json" \
           --retry 3 \
           --retry-delay 5 \
